@@ -2,33 +2,15 @@ package algorithms.part.one.linear;
 
 public class LinkedList<T> {
 
-    private Node<T> head;
+    private static class Node<T> {
+        T data;
+        Node<T> prev, next;
+    }
+
+    private Node<T> first, last;
     private int size = 0;
 
-    public LinkedList() {
-    }
-
-    public static void main(String[] args) {
-        LinkedList<String> linkedList = new LinkedList<>();
-
-        for (int i = 0; i < 10; i++) {
-            linkedList.add("i: " + i);
-        }
-
-        for (int i = 0; i < linkedList.size(); i++) {
-            System.out.println(linkedList.get(i));
-        }
-
-        int n = linkedList.size;
-        for (int i = 0; i < n; i++) {
-            linkedList.remove("i: " + i);
-        }
-        for (int i = 0; i < linkedList.size; i++) {
-            System.out.println(linkedList.get(i));
-        }
-
-        linkedList.remove("i: 9");
-    }
+    public LinkedList() {}
 
     public int size() {
         return size;
@@ -38,81 +20,181 @@ public class LinkedList<T> {
         Node<T> newNode = new Node<>();
         newNode.data = data;
 
-        if (head == null) {
-            head = newNode;
-            head.next = null;
+        if (first == null) {
+            first = last = newNode;
         } else {
-            newNode.next = head;
-            head = newNode;
+            last.next = newNode;
+            newNode.prev = last;
+            last = newNode;
         }
         size++;
     }
 
-    public T get(int index) {
-        if (index >= 0 && index < size) {
-            int i = size - 1;
-            Node<T> current = head;
-            while (current != null && current.next != null) {
-                if (i == index) {
-                    return current.data;
+    public void add(int index, T data) {
+        if (index > -1 && index <= size) {
+            Node<T> newNode = new Node<>();
+            newNode.data = data;
+
+            if (index == 0) {
+                newNode.next = first;
+                if (first != null) first.prev = newNode;
+                else last = newNode;
+                first = newNode;
+            } else if (index == size) {
+                newNode.prev = last;
+                last.next = newNode;
+                last = newNode;
+            } else {
+                Node<T> current;
+                if (index < size / 2) {
+                    current = first;
+                    for (int i = 0; i < index; i++) current = current.next;
                 } else {
-                    current = current.next;
-                    i--;
+                    current = last;
+                    for (int i = size - 1; i > index; i--) current = current.prev;
                 }
+
+                newNode.prev = current.prev;
+                newNode.next = current;
+                current.prev.next = newNode;
+                current.prev = newNode;
             }
-            if (current != null && index == i) {
-                return current.data;
+            size++;
+        } else {
+            throw new IllegalArgumentException("Index out of bound");
+        }
+    }
+
+    public T get(int index) {
+        if (index > -1 && index < size) {
+
+            Node<T> current;
+
+            if (index < size / 2) {
+                current = first;
+                for (int i = 0; i < index; i++) current = current.next;
+            } else {
+                current = last;
+                for (int i = size - 1; i > index; i--) current = current.prev;
             }
-            return null;
+
+            return current.data;
+        } else {
+            throw new IllegalArgumentException("Index out of bound");
+        }
+    }
+
+    public void set(int index, T data) {
+        if (index > -1 && index < size) {
+
+            Node<T> current;
+
+            if (index < size / 2) {
+                current = first;
+                for (int i = 0; i < index; i++) current = current.next;
+            } else {
+                current = last;
+                for (int i = size - 1; i > index; i--) current = current.prev;
+            }
+
+            current.data = data;
         } else {
             throw new IllegalArgumentException("Index out of bound");
         }
     }
 
     public void remove(T data) {
-        if (head != null && head.data.equals(data)) {
-            head = head.next;
-            size--;
-            return;
-        }
-        Node<T> prev = head;
-        Node<T> current = (head != null) ? head.next : null;
+        Node<T> current = first;
+
         while (current != null) {
             if (current.data.equals(data)) {
-                prev.next = current.next;
-                size--;
+                unlink(current);
                 return;
             }
-            prev = current;
             current = current.next;
+        }
+    }
+
+    public void removeAll(T data) {
+        Node<T> current = first;
+
+        while (current != null) {
+            Node<T> next = current.next;
+
+            if (current.data.equals(data)) {
+                unlink(current);
+            }
+            current = next;
         }
     }
 
     public T remove(int index) {
-        int i = size - 1;
-        if (head != null && i == index) {
-            T oldData = head.data;
-            head = head.next;
-            size--;
-            return oldData;
-        }
-        Node<T> prev = head;
-        Node<T> current = (head != null) ? head.next : null;
-        while (current != null) {
-            if (--i == index) {
-                T oldData = current.data;
-                prev.next = current.next;
-                size--;
-                return oldData;
+        if (index > -1 && index < size) {
+            Node<T> current;
+
+            if (index < size / 2) {
+                current = first;
+                for (int i = 0; i < index; i++) current = current.next;
+            } else {
+                current = last;
+                for (int i = size - 1; i > index; i--) current = current.prev;
             }
-            prev = current;
-            current = current.next;
+
+            T data = current.data;
+            unlink(current);
+            return data;
+        } else {
+            throw new IllegalArgumentException("Index out of bound");
         }
-        throw new IllegalArgumentException("Index out of bound");
     }
 
-    private static class Node<T> {
-        T data;
-        Node<T> next;
+    private void unlink(Node<T> node) {
+        final Node<T> prev = node.prev;
+        final Node<T> next = node.next;
+
+        if (prev == null) {
+            first = next;
+        } else {
+            prev.next = next;
+        }
+
+        if (next == null) {
+            last = prev;
+        } else {
+            next.prev = prev;
+        }
+
+        node.data = null;
+        node.prev = node.next = null;
+        size--;
+    }
+
+    public static void main(String[] args) {
+        LinkedList<String> linkedList = new LinkedList<>();
+
+        for (int i = 0; i < 10; i++) {
+            linkedList.add("i:" + i);
+        }
+
+        for (int i = 0; i < linkedList.size(); i++) {
+            System.out.print(linkedList.get(i) + " -> ");
+        }
+        System.out.println();
+
+        linkedList.remove("i:" + 2);
+        linkedList.add(9, "i:2");
+        linkedList.set(1, "i:9");
+
+        for (int i = 0; i < linkedList.size; i++) {
+            System.out.print(linkedList.get(i) + " -> ");
+        }
+        System.out.println();
+
+        linkedList.removeAll("i:9");
+
+        for (int i = 0; i < linkedList.size; i++) {
+            System.out.print(linkedList.get(i) + " -> ");
+        }
+        System.out.println();
     }
 }
