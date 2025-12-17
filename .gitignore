@@ -1,0 +1,42 @@
+# Built application files
+target/
+
+### IntelliJ IDEA ###
+.idea/
+*.iml
+
+# Eclipse project files
+.classpath
+.project
+.settings/
+
+### NetBeans ###
+nbproject/private/
+build/
+dist/
+nbbuild/
+nbdist/
+nb-configuration.xml
+
+# Maven files
+*.log
+*.jar
+*.war
+*.ear
+*.zip
+
+### Log files
+*.log
+
+### OS generated files
+.DS_Store
+Thumbs.db
+
+### Temporary files
+*.tmp
+
+### Other
+*.class
+*.pyc
+*.swp
+*~
