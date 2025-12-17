@@ -3,6 +3,7 @@ package algorithms.part.one.union.find;
 import java.util.Scanner;
 
 public class WeightedQuickUnion {
+
     private static int []arr;
     private static int []size;
 
