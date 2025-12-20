@@ -3,22 +3,6 @@ package algorithms.part.one.binary.search;
 import java.util.Arrays;
 
 public class BinarySearch {
-    public static void main(String[] args) {
-
-        // Normal Binary Search
-        System.out.println("Normal Binary Search");
-        int[] arrOne  = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
-        System.out.println(Arrays.toString(arrOne));
-        int indexOne  = binarySearch(arrOne, 0, 8, 3);
-        System.out.println("Index of 3: " + indexOne);
-
-        // Rotated Array Binary Search
-        System.out.println("Rotated Array Binary Search");
-        int[] arrTwo = new int[]{4, 5, 6, 7, 8, 9, 1, 2, 3};
-        System.out.println(Arrays.toString(arrTwo));
-        int indexTwo = binarySearchRotatedArr(arrTwo, 0, 8, 3);
-        System.out.println("Index of 3: " + indexTwo);
-    }
 
     private static int binarySearch(int[] arr, int left, int right, int target) {
         if (left >= right) return -1;
@@ -43,5 +27,22 @@ public class BinarySearch {
             if (target > arr[mid] && target <= arr[right]) return binarySearchRotatedArr(arr, mid + 1, right, target);
             else return binarySearchRotatedArr(arr, left, mid, target);
         }
+    }
+
+    public static void main(String[] args) {
+
+        // Normal Binary Search
+        System.out.println("Normal Binary Search");
+        int[] arrOne  = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
+        System.out.println(Arrays.toString(arrOne));
+        int indexOne  = binarySearch(arrOne, 0, 8, 3);
+        System.out.println("Index of 3: " + indexOne);
+
+        // Rotated Array Binary Search
+        System.out.println("Rotated Array Binary Search");
+        int[] arrTwo = new int[]{4, 5, 6, 7, 8, 9, 1, 2, 3};
+        System.out.println(Arrays.toString(arrTwo));
+        int indexTwo = binarySearchRotatedArr(arrTwo, 0, 8, 3);
+        System.out.println("Index of 3: " + indexTwo);
     }
 }
