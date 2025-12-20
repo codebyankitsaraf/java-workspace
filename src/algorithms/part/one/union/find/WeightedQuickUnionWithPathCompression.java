@@ -3,8 +3,8 @@ package algorithms.part.one.union.find;
 import java.util.Scanner;
 
 public class WeightedQuickUnionWithPathCompression {
-    private final int []arr;
-    private final int []size;
+    private final int[] arr;
+    private final int[] size;
 
     public WeightedQuickUnionWithPathCompression(int n) {
         arr = new int[n];
@@ -13,6 +13,30 @@ public class WeightedQuickUnionWithPathCompression {
         for (int i = 0; i < n; i++) {
             arr[i] = i;
             size[i] = 1;
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("WeightedQuickUnionWithPathCompression");
+        System.out.print("Enter number of objects (N): ");
+
+        try (var scanner = new Scanner(System.in)) {
+            int n = scanner.nextInt();
+            WeightedQuickUnionWithPathCompression wq = new WeightedQuickUnionWithPathCompression(n);
+
+            System.out.println("Enter pairs (p q):");
+            while (scanner.hasNextInt()) {
+                int p = scanner.nextInt();
+                int q = scanner.nextInt();
+
+                if (wq.isConnected(p, q)) {
+                    System.out.printf("%d %d -> ALREADY CONNECTED \n", p, q);
+                } else {
+                    System.out.printf("%d %d -> UNION\n", p, q);
+                    wq.connect(p, q);
+                    System.out.printf("%d %d -> CONNECTED \n", p, q);
+                }
+            }
         }
     }
 
@@ -38,7 +62,7 @@ public class WeightedQuickUnionWithPathCompression {
     }
 
     private int root(int p) {
-        while(arr[p] != p) {
+        while (arr[p] != p) {
             arr[p] = arr[arr[p]];
             p = arr[p];
         }
@@ -48,30 +72,6 @@ public class WeightedQuickUnionWithPathCompression {
     private void validate(int index, int length) {
         if (index < 0 || index >= length) {
             throw new IllegalArgumentException("Index " + index + " out of bounds [0," + (length - 1) + "]");
-        }
-    }
-
-    public static void main(String[] args) {
-        System.out.println("WeightedQuickUnionWithPathCompression");
-        System.out.print("Enter number of objects (N): ");
-
-        try(var scanner = new Scanner(System.in)){
-            int n = scanner.nextInt();
-            WeightedQuickUnionWithPathCompression wq = new WeightedQuickUnionWithPathCompression(n);
-
-            System.out.println("Enter pairs (p q):");
-            while(scanner.hasNextInt()){
-                int p = scanner.nextInt();
-                int q = scanner.nextInt();
-
-                if(wq.isConnected(p, q)){
-                    System.out.printf("%d %d -> ALREADY CONNECTED \n", p, q);
-                } else {
-                    System.out.printf("%d %d -> UNION\n", p, q);
-                    wq.connect(p, q);
-                    System.out.printf("%d %d -> CONNECTED \n", p, q);
-                }
-            }
         }
     }
 }

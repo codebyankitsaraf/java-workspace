@@ -1,15 +1,39 @@
 package algorithms.part.one.linear;
 
 public class LinkedList<T> {
-    private static class Node<T> {
-        T data;
-        Node<T> prev, next;
-    }
-
     private Node<T> first, last;
     private int size = 0;
+    public LinkedList() {
+    }
 
-    public LinkedList() {}
+    public static void main(String[] args) {
+        LinkedList<String> linkedList = new LinkedList<>();
+
+        for (int i = 0; i < 10; i++) {
+            linkedList.add("i:" + i);
+        }
+
+        for (int i = 0; i < linkedList.size(); i++) {
+            System.out.print(linkedList.get(i) + " -> ");
+        }
+        System.out.println();
+
+        linkedList.remove("i:" + 2);
+        linkedList.add(9, "i:2");
+        linkedList.set(1, "i:9");
+
+        for (int i = 0; i < linkedList.size; i++) {
+            System.out.print(linkedList.get(i) + " -> ");
+        }
+        System.out.println();
+
+        linkedList.removeAll("i:9");
+
+        for (int i = 0; i < linkedList.size; i++) {
+            System.out.print(linkedList.get(i) + " -> ");
+        }
+        System.out.println();
+    }
 
     public int size() {
         return size;
@@ -168,32 +192,8 @@ public class LinkedList<T> {
         size--;
     }
 
-    public static void main(String[] args) {
-        LinkedList<String> linkedList = new LinkedList<>();
-
-        for (int i = 0; i < 10; i++) {
-            linkedList.add("i:" + i);
-        }
-
-        for (int i = 0; i < linkedList.size(); i++) {
-            System.out.print(linkedList.get(i) + " -> ");
-        }
-        System.out.println();
-
-        linkedList.remove("i:" + 2);
-        linkedList.add(9, "i:2");
-        linkedList.set(1, "i:9");
-
-        for (int i = 0; i < linkedList.size; i++) {
-            System.out.print(linkedList.get(i) + " -> ");
-        }
-        System.out.println();
-
-        linkedList.removeAll("i:9");
-
-        for (int i = 0; i < linkedList.size; i++) {
-            System.out.print(linkedList.get(i) + " -> ");
-        }
-        System.out.println();
+    private static class Node<T> {
+        T data;
+        Node<T> prev, next;
     }
 }

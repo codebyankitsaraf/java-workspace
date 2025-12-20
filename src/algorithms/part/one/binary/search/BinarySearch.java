@@ -4,7 +4,25 @@ import java.util.Arrays;
 
 public class BinarySearch {
 
-    private static int binarySearch(int[] arr, int left, int right, int target) {
+    public static void main(String[] args) {
+        BinarySearch bs = new BinarySearch();
+
+        System.out.println("Normal Binary Search");
+        int[] arrOne = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
+        System.out.println(Arrays.toString(arrOne));
+        int indexOne = bs.binarySearch(arrOne, 0, 8, 3);
+        System.out.println("Index of 3: " + indexOne);
+
+        System.out.println("\nRotated Array Binary Search");
+        int[] arrTwo = new int[]{4, 5, 6, 7, 8, 9, 1, 2, 3};
+        System.out.println(Arrays.toString(arrTwo));
+        int indexTwo = bs.binarySearchRotatedArr(arrTwo, 0, 8, 3);
+        System.out.println("Index of 3: " + indexTwo);
+        System.out.println("Index of 5: " + bs.binarySearchRotatedArr(arrTwo, 0, 8, 5));
+        System.out.println("Index of 10: " + bs.binarySearchRotatedArr(arrTwo, 0, 8, 10));
+    }
+
+    public int binarySearch(int[] arr, int left, int right, int target) {
         if (left > right) return -1;
 
         int mid = left + (right - left) / 2;
@@ -14,7 +32,7 @@ public class BinarySearch {
         else return binarySearch(arr, left, mid - 1, target);
     }
 
-    private static int binarySearchRotatedArr(int[] arr, int left, int right, int target) {
+    public int binarySearchRotatedArr(int[] arr, int left, int right, int target) {
         if (left > right) return -1;
 
         int mid = left + (right - left) / 2;
@@ -30,21 +48,5 @@ public class BinarySearch {
                 return binarySearchRotatedArr(arr, mid + 1, right, target);
             return binarySearchRotatedArr(arr, left, mid - 1, target);
         }
-    }
-
-    public static void main(String[] args) {
-        System.out.println("Normal Binary Search");
-        int[] arrOne  = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
-        System.out.println(Arrays.toString(arrOne));
-        int indexOne  = binarySearch(arrOne, 0, 8, 3);
-        System.out.println("Index of 3: " + indexOne);
-
-        System.out.println("\nRotated Array Binary Search");
-        int[] arrTwo = new int[]{4, 5, 6, 7, 8, 9, 1, 2, 3};
-        System.out.println(Arrays.toString(arrTwo));
-        int indexTwo = binarySearchRotatedArr(arrTwo, 0, 8, 3);
-        System.out.println("Index of 3: " + indexTwo);
-        System.out.println("Index of 5: " + binarySearchRotatedArr(arrTwo, 0, 8, 5));
-        System.out.println("Index of 10: " + binarySearchRotatedArr(arrTwo, 0, 8, 10));
     }
 }

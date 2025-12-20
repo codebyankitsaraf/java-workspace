@@ -14,6 +14,56 @@ public class ArrayList<T> {
         array = new Object[capacity];
     }
 
+    public static void main(String[] args) {
+        ArrayList<String> arrayListOne = new ArrayList<>();
+        ArrayList<String> arrayListTwo = new ArrayList<>(10);
+
+        for (int i = 0; i < 10; i++) {
+            arrayListOne.add("i: " + i);
+            arrayListTwo.add("j: " + 5);
+        }
+
+        for (int i = 0; i < arrayListOne.size(); i++) {
+            System.out.print(arrayListOne.get(i) + " ");
+        }
+        System.out.println();
+
+        for (int i = 0; i < arrayListTwo.size(); i++) {
+            System.out.print(arrayListTwo.get(i) + " ");
+        }
+        System.out.println();
+
+        arrayListOne.remove("i: 5");
+        arrayListTwo.removeAll("j: 5");
+
+        for (int i = 0; i < arrayListOne.size(); i++) {
+            System.out.print(arrayListOne.get(i) + " ");
+        }
+        System.out.println();
+
+        for (int i = 0; i < arrayListTwo.size(); i++) {
+            System.out.print(arrayListTwo.get(i) + " ");
+        }
+        System.out.println();
+
+        arrayListOne.add(4, "i: 5");
+        arrayListOne.set(9, "i: 5");
+        arrayListTwo.add("j: 5");
+
+        arrayListOne.trimToSize();
+        arrayListTwo.trimToSize();
+
+        for (int i = 0; i < arrayListOne.size(); i++) {
+            System.out.print(arrayListOne.get(i) + " ");
+        }
+        System.out.println();
+
+        for (int i = 0; i < arrayListTwo.size(); i++) {
+            System.out.print(arrayListTwo.get(i) + " ");
+        }
+        System.out.println();
+    }
+
     public int size() {
         return size;
     }
@@ -87,55 +137,5 @@ public class ArrayList<T> {
         Object[] newArray = new Object[newCapacity];
         System.arraycopy(array, 0, newArray, 0, size);
         array = newArray;
-    }
-
-    public static void main(String[] args) {
-        ArrayList<String> arrayListOne = new ArrayList<>();
-        ArrayList<String> arrayListTwo = new ArrayList<>(10);
-
-        for (int i = 0; i < 10; i++) {
-            arrayListOne.add("i: " + i);
-            arrayListTwo.add("j: " + 5);
-        }
-
-        for (int i = 0; i < arrayListOne.size(); i++) {
-            System.out.print(arrayListOne.get(i) + " ");
-        }
-        System.out.println();
-
-        for (int i = 0; i < arrayListTwo.size(); i++) {
-            System.out.print(arrayListTwo.get(i) + " ");
-        }
-        System.out.println();
-
-        arrayListOne.remove("i: 5");
-        arrayListTwo.removeAll("j: 5");
-
-        for (int i = 0; i < arrayListOne.size(); i++) {
-            System.out.print(arrayListOne.get(i) + " ");
-        }
-        System.out.println();
-
-        for (int i = 0; i < arrayListTwo.size(); i++) {
-            System.out.print(arrayListTwo.get(i) + " ");
-        }
-        System.out.println();
-
-        arrayListOne.add(4, "i: 5");
-        arrayListOne.set(9, "i: 5");
-        arrayListTwo.add("j: 5");
-
-        arrayListOne.trimToSize();
-        arrayListTwo.trimToSize();
-
-        for (int i = 0; i < arrayListOne.size(); i++) {
-            System.out.print(arrayListOne.get(i) + " ");
-        }
-        System.out.println();
-
-        for (int i = 0; i < arrayListTwo.size(); i++) {
-            System.out.print(arrayListTwo.get(i) + " ");
-        }
-        System.out.println();
     }
 }
