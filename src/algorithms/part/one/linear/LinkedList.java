@@ -1,7 +1,6 @@
 package algorithms.part.one.linear;
 
 public class LinkedList<T> {
-
     private static class Node<T> {
         T data;
         Node<T> prev, next;

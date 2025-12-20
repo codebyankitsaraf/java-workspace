@@ -1,7 +1,6 @@
 package algorithms.part.one.linear;
 
 public class ArrayList<T> {
-
     private static final int DEFAULT_CAPACITY = 10;
 
     private Object[] array;
