@@ -1,10 +1,11 @@
 package algorithms.part.one.linear;
 
+import java.util.Arrays;
+
 public class ArrayList<T> {
     private static final int DEFAULT_CAPACITY = 10;
-
-    private Object[] array;
     private int size = 0;
+    private Object[] array;
 
     public ArrayList() {
         array = new Object[DEFAULT_CAPACITY];
@@ -15,53 +16,59 @@ public class ArrayList<T> {
     }
 
     public static void main(String[] args) {
-        ArrayList<String> arrayListOne = new ArrayList<>();
-        ArrayList<String> arrayListTwo = new ArrayList<>(10);
+        System.out.println("ArrayList");
 
-        for (int i = 0; i < 10; i++) {
-            arrayListOne.add("i: " + i);
-            arrayListTwo.add("j: " + 5);
+        ArrayList<String> list1 = new ArrayList<>();
+        ArrayList<String> list2 = new ArrayList<>(5);
+        ArrayList<String> list3 = new ArrayList<>(25);
+
+        for (int i = 0; i < 12; i++) {
+            list1.add("A" + i);
+            list2.add("B" + i);
         }
 
-        for (int i = 0; i < arrayListOne.size(); i++) {
-            System.out.print(arrayListOne.get(i) + " ");
+        System.out.println("list1 after growth (size=" + list1.size() + ", cap=" + list1.array.length + "): " +
+                Arrays.toString(Arrays.copyOf(list1.array, list1.size())));
+        System.out.println("list2 after growth (size=" + list2.size() + ", cap=" + list2.array.length + "): " +
+                Arrays.toString(Arrays.copyOf(list2.array, list2.size())));
+
+        System.out.println("list1.get(3): " + list1.get(3));
+        list1.set(3, "MODIFIED");
+        System.out.println("list1.get(3) after set: " + list1.get(3));
+
+        list1.add(0, "NEW_FIRST");
+        System.out.println("list1 after add(0): " +
+                Arrays.toString(Arrays.copyOf(list1.array, list1.size())));
+
+        list1.remove(2);
+        System.out.println("list1 after remove(2): " +
+                Arrays.toString(Arrays.copyOf(list1.array, list1.size())));
+
+        list2.remove("B3");
+        System.out.println("list2 after remove(B3): " +
+                Arrays.toString(Arrays.copyOf(list2.array, list2.size())));
+
+        for (int i = 0; i < 8; i++) {
+            list2.add("DUPE");
         }
-        System.out.println();
+        list2.remove("B4");
+        list2.remove("B5");
+        System.out.println("list2 before removeAll(DUPE) (size=" + list2.size() + ", cap=" + list2.array.length + "): " +
+                list2.size() + " elements");
 
-        for (int i = 0; i < arrayListTwo.size(); i++) {
-            System.out.print(arrayListTwo.get(i) + " ");
-        }
-        System.out.println();
+        list2.removeAll("DUPE");
+        System.out.println("list2 after removeAll(DUPE) - auto shrink (size=" + list2.size() + ", cap=" + list2.array.length + "): " +
+                Arrays.toString(Arrays.copyOf(list2.array, list2.size())));
 
-        arrayListOne.remove("i: 5");
-        arrayListTwo.removeAll("j: 5");
+        System.out.println("list3 capacity before trim: " + list3.array.length);
+        list3.trimToSize();
+        System.out.println("list3 capacity after trim: " + list3.array.length);
 
-        for (int i = 0; i < arrayListOne.size(); i++) {
-            System.out.print(arrayListOne.get(i) + " ");
-        }
-        System.out.println();
-
-        for (int i = 0; i < arrayListTwo.size(); i++) {
-            System.out.print(arrayListTwo.get(i) + " ");
-        }
-        System.out.println();
-
-        arrayListOne.add(4, "i: 5");
-        arrayListOne.set(9, "i: 5");
-        arrayListTwo.add("j: 5");
-
-        arrayListOne.trimToSize();
-        arrayListTwo.trimToSize();
-
-        for (int i = 0; i < arrayListOne.size(); i++) {
-            System.out.print(arrayListOne.get(i) + " ");
-        }
-        System.out.println();
-
-        for (int i = 0; i < arrayListTwo.size(); i++) {
-            System.out.print(arrayListTwo.get(i) + " ");
-        }
-        System.out.println();
+        ArrayList<Integer> emptyList = new ArrayList<>();
+        System.out.println("emptyList.size(): " + emptyList.size());
+        emptyList.add(999);
+        System.out.println("emptyList after add(999): " +
+                Arrays.toString(Arrays.copyOf(emptyList.array, emptyList.size())));
     }
 
     public int size() {

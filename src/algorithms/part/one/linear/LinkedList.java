@@ -1,37 +1,52 @@
 package algorithms.part.one.linear;
 
+import java.util.Objects;
+
 public class LinkedList<T> {
     private Node<T> first, last;
     private int size = 0;
+
     public LinkedList() {
     }
 
     public static void main(String[] args) {
-        LinkedList<String> linkedList = new LinkedList<>();
+        System.out.println("LinkedList");
 
+        LinkedList<String> list = new LinkedList<>();
+
+        System.out.println("1. After add(10 elements):");
         for (int i = 0; i < 10; i++) {
-            linkedList.add("i:" + i);
+            list.add("i:" + i);
         }
+        printList(list);
 
-        for (int i = 0; i < linkedList.size(); i++) {
-            System.out.print(linkedList.get(i) + " -> ");
+        System.out.println("2. After remove(\"i:2\"):");
+        list.remove("i:2");
+        printList(list);
+
+        System.out.println("3. After add(9, \"i:2\"):");
+        list.add(9, "i:2");
+        printList(list);
+
+        System.out.println("4. After set(1, \"i:9\"):");
+        list.set(1, "i:9");
+        printList(list);
+
+        System.out.println("5. After removeAll(\"i:9\"):");
+        list.removeAll("i:9");
+        printList(list);
+
+        System.out.println("6. get(0): " + list.get(0));
+        System.out.println("   After remove(0):");
+        list.remove(0);
+        printList(list);
+    }
+
+    private static <T> void printList(LinkedList<T> list) {
+        for (int i = 0; i < list.size(); i++) {
+            System.out.print(list.get(i) + " -> ");
         }
-        System.out.println();
-
-        linkedList.remove("i:" + 2);
-        linkedList.add(9, "i:2");
-        linkedList.set(1, "i:9");
-
-        for (int i = 0; i < linkedList.size; i++) {
-            System.out.print(linkedList.get(i) + " -> ");
-        }
-        System.out.println();
-
-        linkedList.removeAll("i:9");
-
-        for (int i = 0; i < linkedList.size; i++) {
-            System.out.print(linkedList.get(i) + " -> ");
-        }
+        System.out.println("size=" + list.size());
         System.out.println();
     }
 
@@ -54,7 +69,7 @@ public class LinkedList<T> {
     }
 
     public void add(int index, T data) {
-        if (index > -1 && index <= size) {
+        if (index >= 0 && index <= size) {
             Node<T> newNode = new Node<>();
             newNode.data = data;
 
@@ -74,7 +89,7 @@ public class LinkedList<T> {
                     for (int i = 0; i < index; i++) current = current.next;
                 } else {
                     current = last;
-                    for (int i = size - 1; i > index; i--) current = current.prev;
+                    for (int i = 0; i < size - 1 - index; i++) current = current.prev;
                 }
 
                 newNode.prev = current.prev;
@@ -89,7 +104,7 @@ public class LinkedList<T> {
     }
 
     public T get(int index) {
-        if (index > -1 && index < size) {
+        if (index >= 0 && index < size) {
 
             Node<T> current;
 
@@ -98,7 +113,7 @@ public class LinkedList<T> {
                 for (int i = 0; i < index; i++) current = current.next;
             } else {
                 current = last;
-                for (int i = size - 1; i > index; i--) current = current.prev;
+                for (int i = 0; i < size - 1 - index; i++) current = current.prev;
             }
 
             return current.data;
@@ -108,7 +123,7 @@ public class LinkedList<T> {
     }
 
     public void set(int index, T data) {
-        if (index > -1 && index < size) {
+        if (index >= 0 && index < size) {
 
             Node<T> current;
 
@@ -117,7 +132,7 @@ public class LinkedList<T> {
                 for (int i = 0; i < index; i++) current = current.next;
             } else {
                 current = last;
-                for (int i = size - 1; i > index; i--) current = current.prev;
+                for (int i = 0; i < size - 1 - index; i++) current = current.prev;
             }
 
             current.data = data;
@@ -126,16 +141,17 @@ public class LinkedList<T> {
         }
     }
 
-    public void remove(T data) {
+    public boolean remove(T data) {
         Node<T> current = first;
 
         while (current != null) {
-            if (current.data.equals(data)) {
+            if (Objects.equals(data, current.data)) {
                 unlink(current);
-                return;
+                return true;
             }
             current = current.next;
         }
+        return false;
     }
 
     public void removeAll(T data) {
@@ -144,7 +160,7 @@ public class LinkedList<T> {
         while (current != null) {
             Node<T> next = current.next;
 
-            if (current.data.equals(data)) {
+            if (Objects.equals(data, current.data)) {
                 unlink(current);
             }
             current = next;
@@ -152,7 +168,7 @@ public class LinkedList<T> {
     }
 
     public T remove(int index) {
-        if (index > -1 && index < size) {
+        if (index >= 0 && index < size) {
             Node<T> current;
 
             if (index < size / 2) {
@@ -160,7 +176,7 @@ public class LinkedList<T> {
                 for (int i = 0; i < index; i++) current = current.next;
             } else {
                 current = last;
-                for (int i = size - 1; i > index; i--) current = current.prev;
+                for (int i = 0; i < size - 1 - index; i++) current = current.prev;
             }
 
             T data = current.data;
