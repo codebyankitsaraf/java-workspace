@@ -1,9 +1,23 @@
 package algorithms.part.one.binary.search;
 
+import java.util.Arrays;
+
 public class BinarySearch {
     public static void main(String[] args) {
-        System.out.println("Index of 3: " + binarySearch(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9}, 0, 8, 3));
-        System.out.println("Index of 3: " + binarySearchRotatedArr(new int[]{4, 5, 6, 7, 8, 9, 1, 2, 3}, 0, 8, 3));
+
+        // Normal Binary Search
+        System.out.println("Normal Binary Search");
+        int[] arrOne  = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
+        System.out.println(Arrays.toString(arrOne));
+        int indexOne  = binarySearch(arrOne, 0, 8, 3);
+        System.out.println("Index of 3: " + indexOne);
+
+        // Rotated Array Binary Search
+        System.out.println("Rotated Array Binary Search");
+        int[] arrTwo = new int[]{4, 5, 6, 7, 8, 9, 1, 2, 3};
+        System.out.println(Arrays.toString(arrTwo));
+        int indexTwo = binarySearchRotatedArr(arrTwo, 0, 8, 3);
+        System.out.println("Index of 3: " + indexTwo);
     }
 
     private static int binarySearch(int[] arr, int left, int right, int target) {
